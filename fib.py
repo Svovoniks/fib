@@ -2,6 +2,7 @@ import asyncio
 import tornado.web
 import decimal
 
+
 def get_fib(n):
     decimal.getcontext().prec = 10000
 
@@ -12,13 +13,16 @@ def get_fib(n):
 
     return round(a)
 
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('Go to "/your_number" for example: <a href="/1000">link</a>')
 
+
 class NumberHandler(tornado.web.RequestHandler):
     def get(self, number):
         self.write(str(get_fib(int(number))))
+
 
 def make_app():
     return tornado.web.Application([
@@ -26,10 +30,16 @@ def make_app():
         (r"/(\d+)", NumberHandler)
     ])
 
+
+def fourty_two():
+    return 42
+
+
 async def main():
     app = make_app()
     app.listen(8898)
     await asyncio.Event().wait()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
